@@ -1,0 +1,31 @@
+.GroupesContainer {
+  border-right: 1px solid black;
+}
+.GroupeName {
+  font-weight: bold;
+  font-size: 18px;
+  padding-left: 15px;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.ResourceConiatner p {
+  font-size: 18px;
+  padding-left: 15px;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.conTainerGroupeItemGroupeData svg {
+  margin-right: 5px;
+  cursor: pointer;
+}
+.ResourceHideState {
+  display: none;
+}
+.ResourceShowState {
+  display: block;
+}

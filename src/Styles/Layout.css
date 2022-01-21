@@ -1,0 +1,6 @@
+.GlobalLayoutContainer {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 15% 85%;
+  background-color: #dfe4ea;
+}

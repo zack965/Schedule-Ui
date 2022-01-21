@@ -1,0 +1,9 @@
+.DateTudayContainer {
+  width: 100%;
+  border-bottom: 1px solid black;
+}
+.DateTudayContainer p {
+  margin-left: 40%;
+  margin-top: 1.5%;
+  margin-bottom: 1.5%;
+}
