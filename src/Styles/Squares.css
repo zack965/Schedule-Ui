@@ -1,0 +1,16 @@
+.SquareContainerRow {
+  float: left;
+}
+
+.SquareContainerRowItem {
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
+  padding-left: 10px;
+  padding-right: 10px;
+  display: flex;
+  align-items: center;
+  height: 36px;
+  float: left;
+  width: 32px;
+}
