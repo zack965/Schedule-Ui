@@ -96,3 +96,43 @@ function Squares() {
 
 export default Squares;
 */
+/* this.setState({
+          groupe_id_arr: [...this.state.groupe_id_arr, id],
+        }); */
+/*  getSnapshotBeforeUpdate = (prevProps) => {
+    return {
+      notifyRequired: prevProps.SquareHeight_x !== this.props.SquareHeight_x,
+    };
+  };
+ */
+/*  componentWillReceiveProps(nextProps) {
+    // You don't have to do this check first, but it can help prevent an unneeded render
+    //if (nextProps.SquareHeight_x !== this.state.SquareHeight_x) {
+    this.setState({ SquareHeight: nextProps.SquareHeight_x });
+    //}
+  } */
+
+/* componentDidUpdate(prevProps, prevState, snapshot) {
+    if (snapshot.notifyRequired) {
+      this.updateAndNotify();
+    }
+  } */
+/* componentDidUpdate() {
+    this.fillSquareHeight_arr();
+    this.fillDayCountArr();
+  } */
+/*  RenderSquareHeight = () => {
+    const doubled = this.state.SquareHeight_arr.map((number) => number * 2);
+    console.log(doubled);
+    return this.state.SquareHeight_arr.map((item) => <p>{item}</p>);
+  }; */
+/* for (let index = 0; index < GroupesData[0].children.length; index++) {
+      this.state.is_down_data.push(0);
+    } */
+/* {
+{(() => {
+          console.log(this.state.SquareHeight_arr);
+          return this.state.SquareHeight_arr.map((item) => <p>{item}</p>);
+        })()} 
+}
+ */
