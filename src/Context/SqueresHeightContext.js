@@ -8,23 +8,36 @@ class HeightProvider extends Component {
   state = {
     height:
       GroupesData.length + GroupesData[0].children.length * GroupesData.length,
+    DayCount: "",
+    ItemIdGroupe: 0,
+    ResourceId: "G1",
   };
 
   // Method to update state
   setHeight = (height) => {
     this.setState({ height: height });
   };
+  setDayCount = (DayCount) => {
+    this.setState({ DayCount: DayCount });
+  };
+  setItemIdGroupe = (ItemIdGroupe) => {
+    this.setState({ ItemIdGroupe: ItemIdGroupe });
+  };
 
   render() {
     const { children } = this.props;
-    const { height } = this.state;
-    const { setHeight } = this;
+    const { height, DayCount, ItemIdGroupe } = this.state;
+    const { setHeight, setDayCount, setItemIdGroupe } = this;
 
     return (
       <HeightContext.Provider
         value={{
           height,
           setHeight,
+          DayCount,
+          setDayCount,
+          ItemIdGroupe,
+          setItemIdGroupe,
         }}
       >
         {children}

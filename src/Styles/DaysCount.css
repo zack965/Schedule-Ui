@@ -1,4 +1,4 @@
-.ItemDivContainerDayNumber p {
+.ItemDivParagraph {
   border: 1px solid black;
   padding-top: 5px;
   padding-bottom: 3px;
@@ -12,4 +12,8 @@
 } */
 .ItemDivContainerDayNumber {
   display: flex;
+}
+.bgBlack {
+  background-color: #8395a7;
+  color: white;
 }

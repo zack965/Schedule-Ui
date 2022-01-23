@@ -23,20 +23,6 @@ class Groupes extends Component {
     };
   }
 
-  componentDidMount() {
-    //this.setState({ x: this.context.height });
-    //console.log(this.state.x);
-    //console.log(this.context.height);
-    //alert(`${this.props.SquareHeight_x}`);
-    //this.props.parentCallback(55);
-    //alert(`${this.props.SquareHeight_x}`);
-    //console.log("-----" + this.props.SquareHeight_x);
-    //console.log(GroupesData[0].children.length);
-    //alert(`${HeightContext}`);
-    //localStorage.setItem("square_height", this.state.countGroupeItem);
-    //console.log(localStorage.getItem("square_height"));
-    //this.props.parentCallback(this.state.countGroupeItem);
-  }
   HandleShowHideItemsGroup = (id) => {
     let groupe_id_arr_x = [...this.state.groupe_id_arr];
     if (this.state.groupe_id_arr.indexOf(id) == "-1") {
@@ -52,28 +38,14 @@ class Groupes extends Component {
       //console.log(this.state.groupe_id_arr);
       this.HandleUnZipLocalStorageState();
     }
-
-    //console.log(this.state.countGroupeItem);
-    //this.props.parentCallback(this.state.countGroupeItem);
-    /* this.props.parentCallback(this.state.countGroupeItem);
-    console.log("-----" + this.props.SquareHeight_x); */
   };
   HandleZipLocalStorageState = () => {
     this.setState({ countGroupeItem: this.state.countGroupeItem - 2 });
-    //localStorage.setItem("square_height", this.state.countGroupeItem);
     this.context.setHeight(this.state.countGroupeItem - 2);
-    //console.log(this.context.height);
-
-    //console.log("-----" + this.props.SquareHeight_x);
-    //console.log(this.state.countGroupeItem);
-
-    //console.log(localStorage.getItem("square_height"));
   };
   HandleUnZipLocalStorageState = () => {
     this.setState({ countGroupeItem: this.state.countGroupeItem + 2 });
-    //localStorage.setItem("square_height", this.state.countGroupeItem);
     this.context.setHeight(this.state.countGroupeItem + 2);
-    //console.log(this.context.height);
   };
   ToggleIsDownState = (id) => {
     if (this.state.is_down == false) {
@@ -86,44 +58,106 @@ class Groupes extends Component {
   };
 
   render() {
-    const { height, setHeight } = this.context;
+    const { height, setHeight, ItemIdGroupe } = this.context;
+    console.log(ItemIdGroupe);
+
+    let GlobalClass = document.getElementsByClassName("GlobalClass");
+    console.log(GlobalClass);
+    console.log(GlobalClass[ItemIdGroupe]);
+    console.log(typeof GlobalClass[ItemIdGroupe]);
+
+    for (let i = 0; i < GlobalClass.length; i++) {
+      GlobalClass[i].style.backgroundColor = "#dfe4ea";
+      GlobalClass[i].style.color = "black";
+    }
+    /* GlobalClass[ItemIdGroupe].style.backgroundColor = "#8395a7";
+    GlobalClass[ItemIdGroupe].style.color = "white"; */
+    if (typeof GlobalClass[ItemIdGroupe] == "undefined") {
+      /* GlobalClass[ItemIdGroupe].style.backgroundColor = "#8395a7";
+      GlobalClass[ItemIdGroupe].style.color = "white"; */
+      console.log("undefined");
+    } else {
+      GlobalClass[ItemIdGroupe].style.backgroundColor = "#8395a7";
+      GlobalClass[ItemIdGroupe].style.color = "white";
+      console.log("not undefined");
+    }
     return (
       <div className="GroupesContainer">
-        {GroupesData.map((item, index) => (
-          <div className="conTainerGroupeItemGroupeData" key={item.id}>
-            <p className="GroupeName">
-              {this.state.is_down == false ? (
-                <FontAwesomeIcon
-                  onClick={() => {
-                    this.ToggleIsDownState(item.id);
-                  }}
-                  icon={faAngleRight}
-                />
-              ) : (
-                <FontAwesomeIcon
-                  onClick={() => {
-                    this.ToggleIsDownState(item.id);
-                  }}
-                  icon={faAngleDown}
-                />
-              )}
-              {item.name}
-            </p>
-            {(() => {
-              if (this.state.groupe_id_arr.indexOf(item.id) == "-1") {
-                return GroupesData[index].children.map((item, index) => (
-                  <div
-                    /* className="ResourceConiatner" */
-                    key={item.index}
-                    className={`ResourceConiatner`}
-                  >
-                    <p>{item.name}</p>
-                  </div>
-                ));
-              }
-            })()}
-          </div>
-        ))}
+        {GroupesData.map((item, index) => {
+          /* console.log(ItemIdGroupe == index);
+          console.log(index); */
+          if (ItemIdGroupe == 0) {
+            return (
+              <div className="conTainerGroupeItemGroupeData" key={item.id}>
+                <p className="GroupeName GlobalClass">
+                  {this.state.is_down == false ? (
+                    <FontAwesomeIcon
+                      onClick={() => {
+                        this.ToggleIsDownState(item.id);
+                      }}
+                      icon={faAngleRight}
+                    />
+                  ) : (
+                    <FontAwesomeIcon
+                      onClick={() => {
+                        this.ToggleIsDownState(item.id);
+                      }}
+                      icon={faAngleDown}
+                    />
+                  )}
+                  {item.name}
+                </p>
+                {(() => {
+                  if (this.state.groupe_id_arr.indexOf(item.id) == "-1") {
+                    return GroupesData[index].children.map((item, index) => (
+                      <div
+                        key={item.index}
+                        className={`ResourceConiatner GlobalClass`}
+                      >
+                        <p>{item.name}</p>
+                      </div>
+                    ));
+                  }
+                })()}
+              </div>
+            );
+          } else {
+            return (
+              <div className="conTainerGroupeItemGroupeData" key={item.id}>
+                <p className="GroupeName GlobalClass">
+                  {this.state.is_down == false ? (
+                    <FontAwesomeIcon
+                      onClick={() => {
+                        this.ToggleIsDownState(item.id);
+                      }}
+                      icon={faAngleRight}
+                    />
+                  ) : (
+                    <FontAwesomeIcon
+                      onClick={() => {
+                        this.ToggleIsDownState(item.id);
+                      }}
+                      icon={faAngleDown}
+                    />
+                  )}
+                  {item.name}
+                </p>
+                {(() => {
+                  if (this.state.groupe_id_arr.indexOf(item.id) == "-1") {
+                    return GroupesData[index].children.map((item, index) => (
+                      <div
+                        key={item.index}
+                        className={`ResourceConiatner GlobalClass`}
+                      >
+                        <p>{item.name}</p>
+                      </div>
+                    ));
+                  }
+                })()}
+              </div>
+            );
+          }
+        })}
       </div>
     );
   }
