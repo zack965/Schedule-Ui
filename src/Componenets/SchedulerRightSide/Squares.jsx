@@ -1,6 +1,8 @@
 import moment from "moment";
 import React, { Component } from "react";
+import { Children } from "react/cjs/react.production.min";
 import HeightContext from "../../Context/SqueresHeightContext";
+import { Events } from "../../Data/EventsData";
 import "../../Styles/Squares.css";
 class Squares extends Component {
   static contextType = HeightContext;
@@ -19,8 +21,36 @@ class Squares extends Component {
       ],
       rox: "",
       column: "",
+      point_start: "",
+      point_end: "",
+      EventResource_Arr: [],
     };
   }
+  HandleDateReformetInEvents = () => {
+    let EventResource_Arr_x = [...this.state.EventResource_Arr];
+    //const EventResource_Arr_x = new Set();
+    Events.map((item) => {
+      item.start = moment(item.start).format("DD");
+      item.end = moment(item.end).format("DD");
+      if (item.resource == "R1") {
+        item.resource = 1;
+      } else if (item.resource == "R2") {
+        item.resource = 2;
+      } else if (item.resource == "R3") {
+        item.resource = 4;
+      } else if (item.resource == "R4") {
+        item.resource = 5;
+      }
+
+      if (this.state.EventResource_Arr.indexOf(item.resource) == "-1") {
+        this.setState({
+          EventResource_Arr: this.state.EventResource_Arr.concat(item.resource),
+        });
+      }
+      //console.log(item);
+    });
+    //this.FilterSquareContainerRow();
+  };
   fillSquareHeight_arr = () => {
     let SquareHeight_arr_x = [...this.state.SquareHeight_arr];
     for (let index = 0; index < this.state.SquareHeight; index++) {
@@ -43,10 +73,77 @@ class Squares extends Component {
   componentDidMount() {
     this.fillSquareHeight_arr();
     this.fillDayCountArr();
+    this.HandleDateReformetInEvents();
+    /* this.FilterSquareContainerRow(); */
   }
   runCallback = (cb) => {
+    /* this.FilterSquareContainerRow(); */
     return cb();
   };
+  FilterSquareContainerRow = () => {
+    let SquareContainerRow =
+      document.getElementsByClassName("SquareContainerRow");
+    //console.log(SquareContainerRow);
+    for (let i = 0; i < SquareContainerRow.length; i++) {
+      Events.map((item) => {
+        if (item.resource == i) {
+          //console.log(item);
+          //console.log(SquareContainerRow[i]);
+          //SquareContainerRow[i].style.backgroundColor = "red";
+          let id_start = "" + i + parseInt(item.start); // 4
+          let id_end = "" + i + parseInt(item.end); // 8
+          //console.log(id_start);
+          let ele_x = document.getElementById(id_start);
+          let ele_x_end = document.getElementById(id_end);
+          //console.log(typeof ele_x == null);
+          if (ele_x == null) {
+            //console.log("ok");
+          } else {
+            /*  console.log(ele_x);
+            console.log(typeof ele_x); */
+            ele_x.style.backgroundColor = "red";
+            //ele_x_end.style.backgroundColor = "gold";
+            console.log(id_start + " " + "id start");
+            console.log(id_end + "  " + "ed end");
+            let length = id_end - id_start;
+            console.log(length + "   " + "length");
+            for (let k = 1; k <= length; k++) {
+              console.log("" + id_end - k);
+              //console.log(k);
+              if (document.getElementById("" + id_end - k) != null) {
+                let ele_ment = document.getElementById("" + id_end - k);
+                //let first_element = document.getElementById("" + length);
+                ele_ment.style.backgroundColor = "#dcdde1";
+                //first_element.style.backgroundColor = "red";
+                ele_ment.style.border = "none";
+                ele_ment.style.borderBottom = "1px solid black";
+                ele_ment.style.borderTop = "4px solid #4834d4";
+                //ele_ment.style.width = "0px";
+
+                //console.log(document.getElementById("" + id_end - k));
+                if (k == length) {
+                  ele_ment.style.borderLeft = "1px solid black";
+                  console.log(ele_ment.getElementsByTagName("p"));
+                  ele_ment.getElementsByTagName("p")[0].innerHTML = item.text;
+                  ele_ment.style.width = 32 * length + "px";
+                } else {
+                  ele_ment.remove();
+                }
+              }
+            }
+            //if (i > id_start || i < id_end) {
+            //document.getElementById(i).style.backgroundColor = "red";
+            /* console.log("-------");
+              console.log(document.getElementById(i));
+              console.log("-------"); */
+            //console.log(i);
+            //}
+          }
+        }
+      });
+    }
+  };
+
   PrintGroupes = () => {
     const { height, DayCount, setDayCount, setItemIdGroupe } = this.context;
     const row = [];
@@ -57,33 +154,46 @@ class Squares extends Component {
           key={i}
           id={i}
           onMouseEnter={() => {
-            //setDayCount(item);
             setItemIdGroupe(i);
-            //console.log(i._targetInst.key);
-            //console.log(i);
           }}
         >
-          {this.state.DayCountArr.map((item) => {
+          {this.state.DayCountArr.map((item, index) => {
             if (this.state.specialdays.indexOf(item) == -1) {
               return (
                 <div
-                  className="SquareContainerRowItem"
+                  className={"SquareContainerRowItem" + " " + i + item}
                   key={item}
+                  id={"" + i + item}
                   onMouseEnter={() => {
                     setDayCount(item);
                     //setItemIdGroupe(i);
+                  }}
+                  onMouseDown={() => {
+                    this.setState({ point_start: item });
+                  }}
+                  onMouseUp={() => {
+                    this.setState({ point_end: item });
                   }}
                 >
                   <p></p>
                 </div>
               );
-            } else {
+            } else if (this.state.specialdays.indexOf(item) !== -1) {
               return (
                 <div
-                  className="SquareContainerRowItem special_day"
+                  className={
+                    "SquareContainerRowItem special_day" + " " + i + item
+                  }
                   key={item}
+                  id={"" + i + item}
                   onMouseEnter={() => {
                     setDayCount(item);
+                  }}
+                  onMouseDown={() => {
+                    this.setState({ point_start: item });
+                  }}
+                  onMouseUp={() => {
+                    this.setState({ point_end: item });
                   }}
                 >
                   <p></p>
@@ -94,114 +204,30 @@ class Squares extends Component {
         </div>
       );
     }
+
     return row;
   };
-
+  HandleEventPrint = (i_index) => {
+    if (!this.state.EventResource_Arr.indexOf(i_index) == "-1") {
+      let SquareContainerRow =
+        document.getElementsByClassName("SquareContainerRow");
+      console.log(SquareContainerRow[i_index]);
+    }
+  };
   render() {
+    //this.FilterSquareContainerRow();
     //const { height, DayCount, setDayCount, setItemIdGroupe } = this.context;
-    return <div className="SquareContainer">{this.PrintGroupes()}</div>;
+    //this.FilterSquareContainerRow();
+    return (
+      <div className="SquareContainer">
+        {/*   {this.FilterSquareContainerRow()} */}
+        {this.PrintGroupes()}
+        {this.FilterSquareContainerRow()}
+        <p> start is :{this.state.point_start}</p>
+        <p> end is : {this.state.point_end}</p>
+      </div>
+    );
   }
 }
 
-export default Squares; /* return (
-
-
-/*
- return (
-      <div className="SquareContainer">
-        {this.runCallback(() => {
-          const row = [];
-          let i_x = 0;
-          for (var i = 0; i < height; i++) {
-            //i_x = i;
-            console.log(i);
-            row.push(
-              <div
-                className="SquareContainerRow"
-                key={i}
-                id={i}
-                onMouseEnter={(i) => {
-                  //setDayCount(item);
-                  //setItemIdGroupe(i);
-                  //console.log(i._targetInst.key);
-                  //console.log();
-                }}
-              >
-        
-                {this.state.DayCountArr.map((item) => {
-                  if (this.state.specialdays.indexOf(item) == -1) {
-                    return (
-                      <div
-                        className="SquareContainerRowItem"
-                        key={item}
-                        onMouseEnter={() => {
-                          setDayCount(item);
-                          //setItemIdGroupe(i);
-                        }}
-                      >
-                        <p></p>
-                      </div>
-                    );
-                  } else {
-                    return (
-                      <div
-                        className="SquareContainerRowItem special_day"
-                        key={item}
-                        onMouseEnter={() => {
-                          setDayCount(item);
-                        }}
-                      >
-                        <p></p>
-                      </div>
-                    );
-                  }
-                })}
-              </div>
-            );
-          }
-          return row;
-        })}
-        <p>{DayCount}</p>
-      </div>
-    );
-    
-      <div className="SquareContainer">
-        {this.state.SquareHeight_arr.map((item) => (
-          <div className="SquareContainerRow" key={item}>
-            {this.state.DayCountArr.map((item) => (
-              <div className="SquareContainerRowItem" key={item}>
-                <p></p>
-              </div>
-            ))}
-          </div>
-        ))}
-        <p>{`height is: ${height}`}</p>
-      </div>
-    ); */
-/*
-<div className="SquareContainerRowItem" key={item}>
-                    <p></p>
-                  </div>
-                  */
-
-//            {index == height ? <p></p> : {}}
-/* return (
-      <div className="SquareContainer">
-        {this.state.SquareHeight_arr.map((item) => (
-          <div className="SquareContainerRow" key={item}>
-            {this.state.DayCountArr.map((item) => (
-              <div className="SquareContainerRowItem" key={item}>
-                <p></p>
-              </div>
-            ))}
-          </div>
-        ))}
-        <p>{`height is: ${height}`}</p>
-      </div>
-    ); */
-
-/* {this.state.DayCountArr.map((item) => (
-              <div className="SquareContainerRowItem" key={item}>
-                <p></p>
-              </div>
-            ))} */
+export default Squares;

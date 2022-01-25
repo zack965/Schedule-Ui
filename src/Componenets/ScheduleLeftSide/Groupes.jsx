@@ -59,12 +59,12 @@ class Groupes extends Component {
 
   render() {
     const { height, setHeight, ItemIdGroupe } = this.context;
-    console.log(ItemIdGroupe);
+    //console.log(ItemIdGroupe);
 
     let GlobalClass = document.getElementsByClassName("GlobalClass");
-    console.log(GlobalClass);
+    /* console.log(GlobalClass);
     console.log(GlobalClass[ItemIdGroupe]);
-    console.log(typeof GlobalClass[ItemIdGroupe]);
+    console.log(typeof GlobalClass[ItemIdGroupe]); */
 
     for (let i = 0; i < GlobalClass.length; i++) {
       GlobalClass[i].style.backgroundColor = "#dfe4ea";
@@ -75,11 +75,11 @@ class Groupes extends Component {
     if (typeof GlobalClass[ItemIdGroupe] == "undefined") {
       /* GlobalClass[ItemIdGroupe].style.backgroundColor = "#8395a7";
       GlobalClass[ItemIdGroupe].style.color = "white"; */
-      console.log("undefined");
+      //console.log("undefined");
     } else {
       GlobalClass[ItemIdGroupe].style.backgroundColor = "#8395a7";
       GlobalClass[ItemIdGroupe].style.color = "white";
-      console.log("not undefined");
+      //console.log("not undefined");
     }
     return (
       <div className="GroupesContainer">

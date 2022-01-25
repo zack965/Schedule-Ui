@@ -4,6 +4,7 @@ import Layout from "./Componenets/Layout";
 import Tes01 from "./Componenets/Tests/Tes01";
 import { HeightProvider } from "./Context/SqueresHeightContext";
 import { DayCountProvider } from "./Context/DayCounrContext";
+import DataLocation from "./Componenets/DataLocation";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Layout />
       </DayCountProvider> */}
       <Layout />
+      <DataLocation />
     </HeightProvider>
   );
 }
