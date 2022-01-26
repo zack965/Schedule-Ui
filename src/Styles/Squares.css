@@ -20,3 +20,13 @@
 .event {
   background-color: red;
 }
+/* .SquareContainer {
+  display: inline-block;
+}
+ */
+.modal {
+  position: fixed;
+  top: 320px;
+  left: 320px;
+  display: none;
+}

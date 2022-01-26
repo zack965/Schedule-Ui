@@ -24,8 +24,13 @@ class Squares extends Component {
       point_start: "",
       point_end: "",
       EventResource_Arr: [],
+      PontStartObjectEvent: "",
+      name_event: "",
     };
   }
+  HandleChangename_event = (e) => {
+    this.setState({ name_event: e.target.value });
+  };
   HandleDateReformetInEvents = () => {
     let EventResource_Arr_x = [...this.state.EventResource_Arr];
     //const EventResource_Arr_x = new Set();
@@ -70,10 +75,29 @@ class Squares extends Component {
     this.setState({ SquareHeight: this.props.SquareHeight_x });
     this.fillSquareHeight_arr();
   };
+  CreateEvent = (start_day, end_day, groupe_ndex, text_event) => {
+    let len_events = Events.length;
+    const start_d = new Date();
+    const end_d = new Date();
+    start_d.setDate(start_day);
+    end_d.setDate(end_day);
+    let new_event = {
+      id: len_events,
+      resource: groupe_ndex,
+      start: moment(start_d).format("DD"),
+      end: moment(end_d).format("DD"),
+      text: text_event,
+    };
+    console.log(new_event);
+    Events.push(new_event);
+    console.log(Events);
+    this.hideModal();
+  };
   componentDidMount() {
     this.fillSquareHeight_arr();
     this.fillDayCountArr();
     this.HandleDateReformetInEvents();
+    //this.CreateEvent(4, 15);
     /* this.FilterSquareContainerRow(); */
   }
   runCallback = (cb) => {
@@ -101,14 +125,14 @@ class Squares extends Component {
           } else {
             /*  console.log(ele_x);
             console.log(typeof ele_x); */
-            ele_x.style.backgroundColor = "red";
+            //ele_x.style.backgroundColor = "red";
             //ele_x_end.style.backgroundColor = "gold";
-            console.log(id_start + " " + "id start");
-            console.log(id_end + "  " + "ed end");
+            //console.log(id_start + " " + "id start");
+            //console.log(id_end + "  " + "ed end");
             let length = id_end - id_start;
-            console.log(length + "   " + "length");
+            //console.log(length + "   " + "length");
             for (let k = 1; k <= length; k++) {
-              console.log("" + id_end - k);
+              //console.log("" + id_end - k);
               //console.log(k);
               if (document.getElementById("" + id_end - k) != null) {
                 let ele_ment = document.getElementById("" + id_end - k);
@@ -123,7 +147,7 @@ class Squares extends Component {
                 //console.log(document.getElementById("" + id_end - k));
                 if (k == length) {
                   ele_ment.style.borderLeft = "1px solid black";
-                  console.log(ele_ment.getElementsByTagName("p"));
+                  //console.log(ele_ment.getElementsByTagName("p"));
                   ele_ment.getElementsByTagName("p")[0].innerHTML = item.text;
                   ele_ment.style.width = 32 * length + "px";
                 } else {
@@ -145,7 +169,8 @@ class Squares extends Component {
   };
 
   PrintGroupes = () => {
-    const { height, DayCount, setDayCount, setItemIdGroupe } = this.context;
+    const { height, DayCount, setDayCount, setItemIdGroupe, ItemIdGroupe } =
+      this.context;
     const row = [];
     for (let i = 0; i < height; i++) {
       row.push(
@@ -170,9 +195,17 @@ class Squares extends Component {
                   }}
                   onMouseDown={() => {
                     this.setState({ point_start: item });
+                    this.setState({ PontStartObjectEvent: ItemIdGroupe });
                   }}
                   onMouseUp={() => {
                     this.setState({ point_end: item });
+                    /* this.CreateEvent(
+                      this.state.point_start,
+                      item,
+                      ItemIdGroupe
+                    ); */
+                    console.log(document.getElementById("1001"));
+                    document.getElementById("1001").style.display = "block";
                   }}
                 >
                   <p></p>
@@ -191,9 +224,17 @@ class Squares extends Component {
                   }}
                   onMouseDown={() => {
                     this.setState({ point_start: item });
+                    this.setState({ PontStartObjectEvent: ItemIdGroupe });
                   }}
                   onMouseUp={() => {
                     this.setState({ point_end: item });
+                    /* this.CreateEvent(
+                      this.state.point_start,
+                      item,
+                      ItemIdGroupe
+                    ); */
+                    console.log(document.getElementById("1001"));
+                    document.getElementById("1001").style.display = "block";
                   }}
                 >
                   <p></p>
@@ -207,24 +248,63 @@ class Squares extends Component {
 
     return row;
   };
-  HandleEventPrint = (i_index) => {
+  /* HandleEventPrint = (i_index) => {
     if (!this.state.EventResource_Arr.indexOf(i_index) == "-1") {
       let SquareContainerRow =
         document.getElementsByClassName("SquareContainerRow");
-      console.log(SquareContainerRow[i_index]);
+      //console.log(SquareContainerRow[i_index]);
     }
+  }; */
+  hideModal = () => {
+    document.getElementById("1001").style.display = "none";
   };
   render() {
     //this.FilterSquareContainerRow();
-    //const { height, DayCount, setDayCount, setItemIdGroupe } = this.context;
+    const { height, DayCount, setDayCount, setItemIdGroupe, ItemIdGroupe } =
+      this.context;
     //this.FilterSquareContainerRow();
     return (
       <div className="SquareContainer">
         {/*   {this.FilterSquareContainerRow()} */}
-        {this.PrintGroupes()}
-        {this.FilterSquareContainerRow()}
+        <div>
+          {this.PrintGroupes()}
+          {this.FilterSquareContainerRow()}
+        </div>
+
         <p> start is :{this.state.point_start}</p>
         <p> end is : {this.state.point_end}</p>
+        <p> RowIndex is : {ItemIdGroupe}</p>
+        <p> PontStartObjectEvent is : {this.state.PontStartObjectEvent}</p>
+        <div className="modal" id="1001">
+          <input
+            type="text"
+            name=""
+            value={this.state.name_event}
+            onChange={this.HandleChangename_event}
+            placeholder="Event Name"
+          />
+          <br />
+          <button
+            onClick={() => {
+              this.CreateEvent(
+                this.state.point_start,
+                this.state.point_end,
+                this.state.PontStartObjectEvent,
+                this.state.name_event
+              );
+            }}
+          >
+            create event
+          </button>
+          <br />
+          <button
+            onClick={() => {
+              this.hideModal();
+            }}
+          >
+            cancel
+          </button>
+        </div>
       </div>
     );
   }
