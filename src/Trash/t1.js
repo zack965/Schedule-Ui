@@ -398,3 +398,27 @@ export default Squares;
           }
         });
       } */
+//if (i > id_start || i < id_end) {
+//document.getElementById(i).style.backgroundColor = "red";
+/* console.log("-------");
+              console.log(document.getElementById(i));
+              console.log("-------"); */
+//console.log(i);
+//}
+//console.log(ele_ment.getElementsByTagName("p"));
+//ele_ment.style.width = "0px";
+
+//console.log(document.getElementById("" + id_end - k));
+//first_element.style.backgroundColor = "red";
+
+//let first_element = document.getElementById("" + length);
+/*  console.log(ele_x);
+            console.log(typeof ele_x); */
+//ele_x.style.backgroundColor = "red";
+//ele_x_end.style.backgroundColor = "gold";
+//console.log(id_start + " " + "id start");
+//console.log(id_end + "  " + "ed end");
+
+//console.log(item);
+//console.log(SquareContainerRow[i]);
+//SquareContainerRow[i].style.backgroundColor = "red";

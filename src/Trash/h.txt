@@ -71,7 +71,10 @@ class Squares extends Component {
     this.setState({ DayCountArr: DayCountArr_x });
     //console.log(this.state.DayCountArr);
   };
-
+  updateAndNotify = () => {
+    this.setState({ SquareHeight: this.props.SquareHeight_x });
+    this.fillSquareHeight_arr();
+  };
   CreateEvent = (start_day, end_day, groupe_ndex, text_event) => {
     let len_events = Events.length;
     const start_d = new Date();
@@ -91,16 +94,16 @@ class Squares extends Component {
     this.hideModal();
   };
   componentDidMount() {
-    console.log("mounted");
     this.fillSquareHeight_arr();
     this.fillDayCountArr();
     this.HandleDateReformetInEvents();
     //this.CreateEvent(4, 15);
     /* this.FilterSquareContainerRow(); */
   }
-  /* runCallback = (cb) => {
+  runCallback = (cb) => {
+    /* this.FilterSquareContainerRow(); */
     return cb();
-  }; */
+  };
   FilterSquareContainerRow = () => {
     let SquareContainerRow =
       document.getElementsByClassName("SquareContainerRow");
@@ -108,7 +111,6 @@ class Squares extends Component {
     for (let i = 0; i < SquareContainerRow.length; i++) {
       Events.map((item) => {
         if (item.resource == i) {
-          console.log("matched");
           let id_start = "" + i + parseInt(item.start); // 4
           let id_end = "" + i + parseInt(item.end); // 8
           let ele_x = document.getElementById(id_start);
@@ -125,13 +127,11 @@ class Squares extends Component {
                 ele_ment.style.border = "none";
                 ele_ment.style.borderBottom = "1px solid black";
                 ele_ment.style.borderTop = "4px solid #4834d4";
-                ele_ment.style.marginLeft = "16px";
-                ele_ment.style.marginRight = "16px";
 
                 if (k == length) {
                   ele_ment.style.borderLeft = "1px solid black";
                   ele_ment.getElementsByTagName("p")[0].innerHTML = item.text;
-                  ele_ment.style.width = 32 * (length - 1) + "px";
+                  ele_ment.style.width = 32 * length + "px";
                 } else {
                   ele_ment.remove();
                 }
@@ -143,15 +143,12 @@ class Squares extends Component {
     }
   };
 
+
   PrintGroupes = () => {
     const { height, setDayCount, setItemIdGroupe, ItemIdGroupe } = this.context;
     const row = [];
-    //console.log("-------------");
-    console.log("executed");
-
     for (let i = 0; i < height; i++) {
-      //console.log(i);
-
+      console.log(i)
       row.push(
         <div
           className="SquareContainerRow"
@@ -221,7 +218,6 @@ class Squares extends Component {
       );
     }
     //this.FilterSquareContainerRow();
-    //console.log("-------------");
     return row;
   };
   /* HandleEventPrint = (i_index) => {
@@ -244,7 +240,7 @@ class Squares extends Component {
         {/*   {this.FilterSquareContainerRow()} */}
         <div>
           {this.PrintGroupes()}
-          {this.FilterSquareContainerRow()}
+          {/* {this.FilterSquareContainerRow()} */}
         </div>
 
         <p> start is :{this.state.point_start}</p>
